@@ -146,16 +146,18 @@ function proml {
   case $TERM in
     xterm*)
     TITLEBAR='\[\033]0;\u@\h:\w\007\]'
+    PCOLOR=$BLACK
     ;;
     *)
     TITLEBAR=""
+    PCOLOR=$WHITE
     ;;
   esac
 
 PS1="${TITLEBAR}\
 $BLUE[$RED\$(date +%H:%M)$BLUE]\
 $BLUE[$RED\u@\h:\w$GREEN\$(parse_git_branch)$BLUE]\
-$BLACK\$ "
+$PCOLOR\$ "
 PS2='> '
 PS4='+ '
 }
