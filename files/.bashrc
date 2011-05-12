@@ -118,7 +118,7 @@ alias pyenv='export PYTHONPATH=$PYTHONPATH:`pwd`'
 alias rd='rmdir'
 alias top='top -d1'
 # pour les données provenant de windows
-alias winrights="/home/gas/scripts/set_unix_rights.sh"
+alias winrights="/home/gas/.uscripts/set_unix_rights.sh"
 alias purgewin="find -name '*.pyc' -exec rm -f {} \;;find -name '*~' -exec rm -f {} \;;find -name '.*~' -exec rm -f {} \;;find -name 'Thumbs.db' -exec rm -f {} \;;find -name '*.m3u' -exec rm -f {} \;"
 alias S="ssh -X root@192.168.1.47"
 alias SS="ssh -X root@192.168.1.62"
@@ -163,6 +163,6 @@ PS4='+ '
 }
 proml
 
-alias sscp='python /home/gas/scripts/ssh.py scp'
-alias sssh='python /home/gas/scripts/ssh.py ssh'
-alias fscp='python /home/gas/scripts/ssh.py fscp'
+alias sscp='python /home/gas/.uscripts/ssh.py scp'
+alias sssh='python /home/gas/.uscripts/ssh.py ssh'
+alias fscp='python /home/gas/.uscripts/ssh.py fscp'
