@@ -121,11 +121,14 @@ alias top='top -d1'
 alias winrights="/home/gas/scripts/set_unix_rights.sh"
 alias purgewin="find -name '*.pyc' -exec rm -f {} \;;find -name '*~' -exec rm -f {} \;;find -name '.*~' -exec rm -f {} \;;find -name 'Thumbs.db' -exec rm -f {} \;;find -name '*.m3u' -exec rm -f {} \;"
 alias S="ssh -X root@192.168.1.47"
+alias SS="ssh -X root@192.168.1.62"
 alias lab13="ssh -X root@195.221.237.13"
+alias olivon="ssh -X gaston@88.191.132.224"
 alias df='df -h -x supermount'
 alias ls='ls -F --color=auto'
 alias du='du -h'
 alias grep='grep --color'
+alias pylint="pylint --rcfile=~/.pylintrc $1"
 # Pour git:
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -158,3 +161,6 @@ PS4='+ '
 }
 proml
 
+alias sscp='python /home/gas/scripts/ssh.py scp'
+alias sssh='python /home/gas/scripts/ssh.py ssh'
+alias fscp='python /home/gas/scripts/ssh.py fscp'

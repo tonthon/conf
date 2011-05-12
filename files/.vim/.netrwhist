@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/gas'
+let g:netrw_dirhist_2='/home/gas/.Private'
+let g:netrw_dirhist_3='/home/gas/.xchat2'
+let g:netrw_dirhist_4='/home/gas/git/tonthon/packages'
