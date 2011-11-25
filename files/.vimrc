@@ -1,8 +1,6 @@
-set showmatch
 "Pour le collage"
 set pt=<F5>
 set vb t_vb="
-set shiftwidth=4
 set expandtab
 set ts=4
 syntax on
@@ -31,10 +29,11 @@ autocmd bufnewfile *.py exe "1," . 10 . "g/Creation Date :.*/s//Creation Date : 
 autocmd Bufwritepre,filewritepre *.py execute "normal ma"
 autocmd Bufwritepre,filewritepre *.py  exe "1," . 10 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
 autocmd bufwritepost,filewritepost *.py execute "normal `a"
+autocmd bufnewfile *.html so /home/gas/.vim/html.txt
 
 
 " Supprime les espaces en fin de ligne avant de sauver
-autocmd BufWrite * silent! %s/[\r \t]\+$//
+autocmd BufWrite *.py silent! %s/[\r \t]\+$//
 "
 " " Police de caractere pour gvim
 set guifont=Deja\ Vu\ Sans\ Mono\ Bold\ 9
@@ -49,3 +48,36 @@ let g:pydiction_location = '/home/gas/.vim/other/complete-dict'
 
 "autocmd FileType python runtime! autoload/pythoncomplete.vim
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
+""""""""""""""""""""""""""""""
+" => JavaScript section
+"""""""""""""""""""""""""""""""
+au FileType javascript call JavaScriptFold()
+au FileType javascript setl fen
+au FileType javascript setl nocindent
+
+au FileType javascript imap <c-t> AJS.log();<esc>hi
+au FileType javascript imap <c-a> alert();<esc>hi
+
+au FileType javascript inoremap <buffer> $r return
+au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
+
+function! JavaScriptFold()
+    setl foldmethod=syntax
+    setl foldlevelstart=1
+    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+
+    function! FoldText()
+    return substitute(getline(v:foldstart), '{.*', '{...}', '')
+    endfunction
+    setl foldtext=FoldText()
+endfunction
+"""""""""""""""""""""""""""""""""""
+" => Php section
+"""""""""""""""""""""""""""""""""""
+au filetype php call PhpFold()
+
+function! PhpFold()
+    setl shiftwidth=2
+    setl softtabstop=2
+    setl tabstop=2
+endfunction

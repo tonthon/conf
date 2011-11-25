@@ -6,15 +6,17 @@
 #   License: http://www.gnu.org/licenses/gpl-3.0.txt
 #
 # * Creation Date : 30-08-2010
-# * Last Modified : mer. 01 sept. 2010 19:03:34 CEST
+# * Last Modified : mar. 27 sept. 2011 15:14:11 CEST
 #
 # * Project : Usefull ssh tricks
 #
 
 import sys
 import os
+HERE = os.path.dirname(__file__)
 
-def load_conf(fname='/home/gas/scripts/conf.ini'):
+
+def load_conf(fname=os.path.join(HERE, 'conf.ini')):
     return file(fname).read().splitlines()[0].strip()
 
 def add_dots(name):
