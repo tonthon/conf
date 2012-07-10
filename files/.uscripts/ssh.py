@@ -6,7 +6,7 @@
 #   License: http://www.gnu.org/licenses/gpl-3.0.txt
 #
 # * Creation Date : 30-08-2010
-# * Last Modified : jeu. 22 mars 2012 16:44:53 CET
+# * Last Modified : mar. 10 juil. 2012 13:46:17 CEST
 #
 # * Project : Usefull ssh tricks
 #
@@ -74,8 +74,8 @@ def get_ssh_command(server_conf):
     """
         return the ssh command
     """
-    keyopt = get_ssh_key_opt(server_conf)
-    return "/usr/bin/ssh -X {0} {1[user]}@{1[host]}".format(keyopt,
+    opts = get_ssh_opts(server_conf)
+    return "/usr/bin/ssh -X {0} {1[user]}@{1[host]}".format(opts,
                                                             server_conf)
 
 def get_ssh_key_opt(server_conf):
@@ -92,6 +92,15 @@ def get_ssh_key_opt(server_conf):
         keyopt = ""
     return keyopt
 
+def get_ssh_opts(server_conf, port_opt='-p'):
+    """
+        returns the ssh options
+    """
+    key_opt = get_ssh_key_opt(server_conf)
+    port = server_conf.get('port', 22)
+    port_opt = "{0} {1}".format(port_opt, port)
+    return "{0} {1}".format(key_opt, port_opt)
+
 def get_remote_dir(server_conf, directory):
     """
         Return the remote directory's fullpath
@@ -106,11 +115,10 @@ def get_scp_cmd(server_conf, destination, tocopy):
     """
     cmd = "scp -r {0} {1} {2}"
 
-    keyopt = get_ssh_key_opt(server_conf)
+    opts = get_ssh_opts(server_conf, port_opt='-P')
     destination = get_remote_dir(server_conf, destination)
     tocopy = ' '.join(tocopy)
-
-    return cmd.format(keyopt, tocopy, destination)
+    return cmd.format(opts, tocopy, destination)
 
 def get_fscp_cmd(server_conf, destination, tocopy):
     """
@@ -118,10 +126,10 @@ def get_fscp_cmd(server_conf, destination, tocopy):
     """
     cmd = "scp -r {0} {1} {2}"
 
-    keyopt = get_ssh_key_opt(server_conf)
+    opts = get_ssh_opts(server_conf)
     origins = ' '.join([get_remote_dir(server_conf, directory)
                                         for directory in tocopy])
-    return cmd.format(keyopt, origins, destination)
+    return cmd.format(opts, origins, destination)
 
 def connect(server_conf, _x = True):
     """
