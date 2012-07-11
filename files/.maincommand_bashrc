@@ -1,39 +1,85 @@
 # retrieved from http://rc98.net/pystartup
-export PYTHONSTARTUP=/home/gas/.pystartup
+export PYTHONSTARTUP=/root/.pystartup
 
 # Pour git:
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
-# Coloration de la console
-function proml {
-  local       BLACK="\[\033[0;30m\]"
-  local        BLUE="\[\033[0;34m\]"
-  local         RED="\[\033[0;31m\]"
-  local   LIGHT_RED="\[\033[1;31m\]"
-  local       GREEN="\[\033[0;32m\]"
-  local LIGHT_GREEN="\[\033[1;32m\]"
-  local       WHITE="\[\033[1;37m\]"
-  local  LIGHT_GRAY="\[\033[0;37m\]"
-  case $TERM in
-    xterm*)
+
+case "$LC_TERMBG" in
+light)
+    # Coloration de la console
+    function proml {
+      local       BLACK="\[\033[0;30m\]"
+      local        BLUE="\[\033[0;34m\]"
+      local         RED="\[\033[0;31m\]"
+      local   LIGHT_RED="\[\033[1;31m\]"
+      local       GREEN="\[\033[0;32m\]"
+      local LIGHT_GREEN="\[\033[1;32m\]"
+      local       WHITE="\[\033[1;37m\]"
+      local  LIGHT_GRAY="\[\033[0;37m\]"
     TITLEBAR='\[\033]0;\u@\h:\w\007\]'
     PCOLOR=$BLACK
-    ;;
-    *)
-    TITLEBAR=""
-    PCOLOR=$WHITE
-    ;;
-  esac
 
-PS1="${TITLEBAR}\
+    PS1="${TITLEBAR}\
 $BLUE[$RED\$(date +%H:%M)$BLUE]\
 $BLUE[$RED\u@\h:\w$GREEN\$(parse_git_branch)$BLUE]\
 $PCOLOR\$ "
 PS2='> '
 PS4='+ '
+    }
+    proml
+    ;;
+dark)
+prompt_command () {
+    # set an error string for the prompt, if applicable
+    if [ "\$(type -t __git_ps1)" ]; then # if we're in a Git repo, show current branch
+        BRANCH="\$(__git_ps1 '[ %s ] ')"
+    fi
+    local TIME=`fmt_time` # format time for prompt string
+    local LOAD=`uptime|awk '{min=NF-2;print $min}'`
+    local GREEN="\[\033[0;32m\]"
+    local CYAN="\[\033[0;36m\]"
+    local BCYAN="\[\033[1;36m\]"
+    local BLUE="\[\033[0;34m\]"
+    local GRAY="\[\033[0;37m\]"
+    local DKGRAY="\[\033[1;30m\]"
+    local WHITE="\[\033[1;37m\]"
+    local RED="\[\033[0;31m\]"
+    # return color to Terminal setting for text color
+    local DEFAULT="\[\033[0;39m\]"
+    # set the titlebar to the last 2 fields of pwd
+    local TITLEBAR='\[\e]2;`pwdtail`\a'
+    export PS1="`echo $?`\[${TITLEBAR}\]${CYAN}[ ${BCYAN}\u${GREEN}@${BCYAN}\
+\h${DKGRAY}(${LOAD}) ${WHITE}${TIME} ${CYAN}]\`echo $?\`${GRAY}\
+\w\n${GREEN}${BRANCH}${DEFAULT}$ "
 }
-proml
+PROMPT_COMMAND=prompt_command
+
+fmt_time () { #format time just the way I likes it
+    if [ `date +%p` = "PM" ]; then
+        meridiem="pm"
+    else
+        meridiem="am"
+    fi
+    date +"%l:%M:%S$meridiem"|sed 's/ //g'
+}
+pwdtail () { #returns the last 2 fields of the working directory
+    pwd|awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
+}
+chkload () { #gets the current 1m avg CPU load
+    local CURRLOAD=`uptime|awk '{print $8}'`
+    if [ "$CURRLOAD" > "1" ]; then
+        local OUTP="HIGH"
+    elif [ "$CURRLOAD" > "1" ]; then
+        local OUTP="NORMAL"
+    else
+        local OUTP="UNKNOWN"
+    fi
+    echo $CURRLOAD
+}
+    ;;
+esac
 
 alias c='clear'
 alias f="firefox"
