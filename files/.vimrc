@@ -14,7 +14,6 @@ if $LC_TERMBG == 'light'
     set bg=light
 endif
 
-
 set hlsearch          " Surligne les resultats de recherche
 set nowrap            " Pas de retour a la ligne auto (affichage)
 set showmatch         " Affiche parenthese correspondante
@@ -48,6 +47,7 @@ autocmd Bufwritepre,filewritepre *.py execute "normal ma"
 autocmd Bufwritepre,filewritepre *.py  exe "1," . 10 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
 autocmd bufwritepost,filewritepost *.py execute "normal `a"
 au BufRead,BufNewFile *.cf set ft=cf3
+au BufRead,BufNewFile /etc/cfengine3/*.* set ft=cf3
 
 
 autocmd bufnewfile *.js exe "1," . 10 . "g/File Name :.*/s//File Name : " .expand("<afile>:f:e")

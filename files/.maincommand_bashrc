@@ -57,12 +57,14 @@ prompt_command () {
 PROMPT_COMMAND=prompt_command
 
 fmt_time () { #format time just the way I likes it
-    if [ `date +%p` = "PM" ]; then
-        meridiem="pm"
+    indicator=`date +%p`
+    if [ "x${indicator}" = "x" ] ; then
+        date +"%k:%M:%S"|sed 's/ //g' ;
+    elif [ "${indicator}" = "PM" ]; then
+        date +"%l:%M:%Spm"|sed 's/ //g' ;
     else
-        meridiem="am"
+        date +"%l:%M:%Sam"|sed 's/ //g'
     fi
-    date +"%l:%M:%S$meridiem"|sed 's/ //g'
 }
 pwdtail () { #returns the last 2 fields of the working directory
     pwd|awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
