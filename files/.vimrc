@@ -38,7 +38,7 @@ autocmd BufRead *.mako set filetype=mako
 autocmd BufRead *.mak set filetype=mako
 autocmd BufRead *.kv set filetype=kivy
 
-"autocmd bufnewfile *.py so /home/gas/.vim/header.txt
+"autocmd bufnewfile *.py so /root/.vim/header.txt
 autocmd! BufNewFile * silent! so ~/.vim/skel/tmpl.%:e
 
 autocmd bufnewfile *.py exe "1," . 10 . "g/File Name :.*/s//File Name : " .expand("%")
@@ -52,10 +52,10 @@ au BufRead,BufNewFile /etc/cfengine3/*.* set ft=cf3
 
 autocmd bufnewfile *.js exe "1," . 10 . "g/File Name :.*/s//File Name : " .expand("<afile>:f:e")
 autocmd bufnewfile *.css exe "1," . 10 . "g/File Name :.*/s//File Name : " .expand("%")
-"autocmd bufnewfile *.html so /home/gas/.vim/html.txt
-"autocmd bufnewfile *.php so /home/gas/.vim/php.txt
-"autocmd bufnewfile *.js so /home/gas/.vim/jscss.txt
-"autocmd bufnewfile *.css so /home/gas/.vim/jscss.txt
+"autocmd bufnewfile *.html so /root/.vim/html.txt
+"autocmd bufnewfile *.php so /root/.vim/php.txt
+"autocmd bufnewfile *.js so /root/.vim/jscss.txt
+"autocmd bufnewfile *.css so /root/.vim/jscss.txt
 
 
 au FileType html,css setl shiftwidth=2
@@ -77,7 +77,7 @@ autocmd BufWrite *.* silent! %s/[\r \t]\+$//
 "
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
-let g:pydiction_location = '/home/gas/.vim/other/complete-dict'
+let g:pydiction_location = '/root/.vim/other/complete-dict'
 
 
 "autocmd FileType python runtime! autoload/pythoncomplete.vim
