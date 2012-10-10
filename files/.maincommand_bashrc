@@ -23,7 +23,7 @@ light)
 
     PS1="`echo $?`${TITLEBAR}\
 $BLUE[$RED\$(date +%H:%M)$BLUE]\
-$BLUE[$RED\u@\h:\w$BLUE]\
+$BLUE[$RED\u@`hostname`:\w$BLUE]\
 \n$GREEN\$(parse_git_branch)$PCOLOR\$ "
 PS2='> '
 PS4='+ '
